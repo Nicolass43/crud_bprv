@@ -1,6 +1,6 @@
 <?php
-    include '../conexion_be.php';
-
+    include_once '../conexion_be.php';
+    
     error_reporting(E_ALL); 
     ini_set('display_errors', 1);
 
@@ -29,11 +29,22 @@
         nav {
             background-color: #333;
             color: #fff;
-            padding: 15px;
+            padding: 7.5px;
             text-align: center;
         }
 
-        nav a {
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .crud, .Log_out {
             color: #fff;
             text-decoration: none;
             padding: 10px;
@@ -42,15 +53,26 @@
             transition: background-color 0.3s;
         }
 
-        nav a:hover {
+        .crud:hover, .Log_out:hover {
             background-color: #555;
+        }
+
+        .Log_out {
+            background-color: orange; /* Cambia el color de fondo a naranja */
         }
     </style>
 <body>
     <nav>
-        <a href=../crud/crear.php>Crear</a>
-        <a href="../crud/actualizar.php">Editar</a>
-        <a href="../crud/eliminar.php">Eliminar</a>
+    <nav>
+    <div class="nav">
+        <div class="nav-links">
+            <a href="../crud/actualizar.php" class="crud">Editar</a>
+            <a href=../crud/crear.php class="crud">Crear</a>
+            <a href="../crud/eliminar.php" class="crud">Eliminar</a>
+        </div>
+        <a href="../cerra_sesion.php" class="Log_out">Log Out</a>
+    </div>
+</nav>
     </nav>
 <?php
 
@@ -76,17 +98,16 @@ ORDER BY pr.id ASC;
 
 $resultado = $conexion->query($sql);
 
-//  Verificar si la consulta fue exitosa
+//  verificar si la consulta fue exitosa y generamos una tabla dependiendo de los datos
 if ($resultado->num_rows > 0) {
-    // Generar la tabla HTML
     echo '<table border="1">';
-    //  Encabezados de la tabla
+    //  encabezados de la tabla
     echo '<tr>';
     while ($columna = $resultado->fetch_field()) {
         echo '<th>' . $columna->name . '</th>';
     }
     echo '</tr>';
-    //  Datos de la tabla
+    //  datos de la tabla
     while ($fila = $resultado->fetch_assoc()) {
         echo '<tr>';
         foreach ($fila as $valor) {
@@ -98,8 +119,6 @@ if ($resultado->num_rows > 0) {
 } else {
     echo "No se encontraron resultados.";
 }
-
-//  Cerrar conexión
 
 ?>
 

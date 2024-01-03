@@ -1,6 +1,6 @@
 <?php
 
-include '../conexion_be.php';
+include_once '../conexion_be.php';
 session_start();
 
 // verifica que el usuario si inicio sesion
@@ -38,7 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql2 = "INSERT INTO proveedor_categoria (id_proveedor, id_categoria) VALUES ('$id_proveedor', '$categoria')";
 
         if ($conexion->query($sql2) === TRUE) {
-            echo "Proveedor creado exitosamente.";
+            echo '<script>
+                alert("Proveedor creado exitosamente.");
+                window.location = "../datos/proveedores.php";
+                </script>';
         } else {
             echo "Error al crear el proveedor: " . $conexion->error;
         }
@@ -62,7 +65,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-align: center;
         }
 
-        nav a {
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .crud, .Log_out {
             color: #fff;
             text-decoration: none;
             padding: 10px;
@@ -71,23 +85,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transition: background-color 0.3s;
         }
 
-        nav a:hover {
+        .crud:hover, .Log_out:hover {
             background-color: #555;
         }
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
 
-            height: 10vh;
+        .Log_out {
+            background-color: orange; /* Cambia el color de fondo a naranja */
         }
-
         form {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px; 
+            margin: 20px auto;
         }
 
         h1 {
@@ -129,11 +140,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <nav>
-        <a href="../crud/actualizar.php">Editar</a>
-        <a href="../datos/proveedores.php">Ver</a>
-        <a href="../crud/eliminar.php">Eliminar</a>
-    </nav>
+<nav>
+    <div class="nav">
+        <div class="nav-links">
+            <a href="../crud/actualizar.php" class="crud">Editar</a>
+            <a href="../datos/proveedores.php" class="crud">Ver</a>
+            <a href="../crud/eliminar.php" class="crud">Eliminar</a>
+        </div>
+        <a href="../cerra_sesion.php" class="Log_out">Log Out</a>
+    </div>
+</nav>
     <h1>Crear Proveedor</h1>
 
     <form method="post" action="crear.php">

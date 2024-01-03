@@ -1,17 +1,17 @@
 <?php
     session_start();
 
-    include 'conexion_be.php';
-
-    $correo =$_POST['correo'];
+    include_once 'conexion_be.php';
+    
+    $usuario =$_POST['usuario'];
     $clave =$_POST['clave'];
     $clave = hash('sha512', $clave);
 
-    $validar_login = mysqli_query($conexion, "SELECT * FROM usuarios WHERE correo='$correo'
+    $validar_login = mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario='$usuario'
     AND clave='$clave'");
 
     if(mysqli_num_rows($validar_login) > 0){
-        $_SESSION['usuario'] = $correo;
+        $_SESSION['usuario'] = $usuario;
         header("location: datos/proveedores.php");
         
         exit;
