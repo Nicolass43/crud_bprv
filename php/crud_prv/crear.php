@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario'])) {
     echo '
         <script>
             alert("Por favor, inicia sesión");
-            window.location = "index.php"; 
+            window.location = "../../index.php"; 
         </script>
     ';
     session_destroy();
@@ -62,19 +62,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #333;
             color: #fff;
             padding: 15px;
-            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
 
         .nav {
             display: flex;
             justify-content: space-between;
             align-items: center; 
+            width: 80%;
+            margin: 0 auto;
         }
-
         .nav-links {
             display: flex;
             align-items: center;
+            margin: 0;
         }
+
 
         .crud, .Log_out {
             color: #fff;
@@ -90,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .Log_out {
-            background-color: orange; /* Cambia el color de fondo a naranja */
+            background-color: orange;
         }
         form {
             background-color: #fff;
@@ -104,8 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         h1 {
             text-align: center;
             color: #333;
-            margin-bottom: 20px;
-            margin-right: 20px;
+            
         }
 
         label {
@@ -137,15 +142,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         button:hover {
             background-color: #45a049;
         }
+        .icon-circle {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        border-radius: 50%;
+        padding: 5px;
+        margin-left: 108vh;
+        }
+        .icon {
+            width: 30px;
+            height: 30px;
+        }
     </style>
 </head>
 <body>
 <nav>
     <div class="nav">
+    <!-- <a href="../datos/insumos.php" class="crud">Insumos</a> -->
         <div class="nav-links">
-            <a href="../crud/actualizar.php" class="crud">Editar</a>
-            <a href="../datos/proveedores.php" class="crud">Ver</a>
-            <a href="../crud/eliminar.php" class="crud">Eliminar</a>
+            <a href="../crud_prv/actualizar.php" class="crud">Editar</a>
+            <a href="../datos/proveedores.php" class="crud">Proveedores</a>
+            <a href="../crud_prv/eliminar.php" class="crud">Eliminar</a>
+        </div>
+        <div class="icon-circle">
+            <img src="../../assets/images/usuario.png" alt="Icono" class="icon" >
         </div>
         <a href="../cerra_sesion.php" class="Log_out">Log Out</a>
     </div>
@@ -176,8 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <option value="Credito">Credito</option>
             <option value="Contado">Contado</option>
         </select>
-        <br>
-        <br>
+
         <label for="id_categoria">Categoria:</label>
         <select id="Categoria" name="id_categoria">
 

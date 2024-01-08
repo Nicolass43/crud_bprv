@@ -1,3 +1,11 @@
 <?php
-    $conexion = mysqli_connect("localhost","phpadmin", "1234", "sistema_busqueda_prv");
+    $conexion = mysqli_connect(
+        //host
+        "localhost",
+        //usuario
+        "phpadmin", 
+        //password
+        "1234", 
+        //base de datos
+        "sistema_busqueda_prv");
 ?>
