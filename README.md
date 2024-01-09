@@ -1,11 +1,5 @@
 Este es el sistema de busqueda de proveedores.
-         ______________
-        |	     |	
-        |	     | 
-        |    SPOPT™    |
-        |	     |	
-        |______________|
-
+            SPOPT™
 el sistema esta compuesto por las siglas CRUD
             CREATE 
             READ
