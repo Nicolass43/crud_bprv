@@ -1,11 +1,5 @@
 Este es el sistema de busqueda de proveedores.
-         ______________
-        |	       |	
-        |	       | 
-        |    SPOPT™    |
-        |	       |	
-        |______________|
-
+            SPOPT™
 el sistema esta compuesto por las siglas CRUD
             CREATE 
             READ
@@ -13,8 +7,13 @@ el sistema esta compuesto por las siglas CRUD
             DELETE
 El login fue realizado por otro usuario pero es funcional con la base de datos.            
 
+<<<<<<< HEAD
 Todo esto esta siendo hosteado por apache2 en el archivo.
         /var/www/html/LOGIN
+=======
+Todo esto esta siendo hosteado por apache2 en el archivo
+        computer/var/www/html/LOGIN
+>>>>>>> refs/remotes/origin/main
 
 El codigo es bastante simple de entender pero aun asi intentare dejare la mayor cantidad de comentarios dentro del mismo.
 
