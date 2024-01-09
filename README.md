@@ -7,10 +7,8 @@ el sistema esta compuesto por las siglas CRUD
             DELETE
 El login fue realizado por otro usuario pero es funcional con la base de datos.            
 
-<<<<<<< HEAD
 Todo esto esta siendo hosteado por apache2 en el archivo.
         /var/www/html/LOGIN
-=======
 Todo esto esta siendo hosteado por apache2 en el archivo
         computer/var/www/html/LOGIN
 >>>>>>> refs/remotes/origin/main
