@@ -1,9 +1,7 @@
 <?php
-
-include_once '../conexion_be.php';
 session_start();
+include_once '../conexion_be.php';
 
-// verifica que el usuario si inicio sesion
 if (!isset($_SESSION['usuario'])) {
     echo '
         <script>
@@ -14,6 +12,7 @@ if (!isset($_SESSION['usuario'])) {
     session_destroy();
     die();
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rut = $_POST['rut'];
@@ -26,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $categoria = $_POST['id_categoria'];
 
-    // Insertar el proveedor
+    // insertar el proveedor
     $sql = "INSERT INTO proveedor (rut, nombre_fantasia, razon_social, direccion, email, telefono, condicion_pago) 
             VALUES ('$rut', '$nombre_fantasia', '$razon_social', '$direccion', '$email', '$telefono', '$condicion_pago')";
 
     if ($conexion->query($sql) === TRUE) {
-        // Obtener la última ID insertada
+        // obtener la última ID insertada
         $id_proveedor = $conexion->insert_id;
 
         // Insertar en la tabla proveedor_categoria
@@ -119,13 +118,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-weight: bold;
         }
 
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        input,
+        select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        text-align: center;
         }
 
         button {
@@ -142,6 +143,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         button:hover {
             background-color: #45a049;
         }
+        .container-main{
+        margin-top:10vh;
+    }
         .icon-circle {
         display: flex;
         align-items: center;
@@ -159,26 +163,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <nav>
     <div class="nav">
-    <!-- <a href="../datos/insumos.php" class="crud">Insumos</a> -->
+    <a href="../datos/categorias.php" class="crud">Categoria</a> 
         <div class="nav-links">
             <a href="../crud_prv/actualizar.php" class="crud">Editar</a>
-            <a href="../datos/proveedores.php" class="crud">Proveedores</a>
+            <a href="../datos/proveedores.php" class="crud">Ver</a>
             <a href="../crud_prv/eliminar.php" class="crud">Eliminar</a>
         </div>
         <div class="icon-circle">
             <img src="../../assets/images/usuario.png" alt="Icono" class="icon" >
         </div>
-        <a href="../cerra_sesion.php" class="Log_out">Log Out</a>
+        <a href="../cerra_sesion.php" class="Log_out">Salir</a>
     </div>
 </nav>
     <h1>Crear Proveedor</h1>
-
+<div class="container-main">
     <form method="post" action="crear.php">
         <label for="rut">RUT:</label>
         <input type="text" name="rut" required>
         <br>
         <label for="razon_social">Razón Social:</label>
-        <input type="text" name="razon_social" >
+        <input type="text" name="razon_social" required>
         <br>
         <label for="nombre_fantasia">Nombre Fantasía:</label>
         <input type="text" name="nombre_fantasia" >
@@ -194,39 +198,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <br>
         <label for="condicion_pago">Condición de Pago:</label>
         <select name="condicion_pago" id="condicion_pago">
+        <option value="" selected disabled>Seleccionar Pago</option>
             <option value="Credito">Credito</option>
             <option value="Contado">Contado</option>
         </select>
 
         <label for="id_categoria">Categoria:</label>
         <select id="Categoria" name="id_categoria">
+        <option value="" selected disabled>Seleccionar Categoría</option>
+        <?php
+            // Consulta para obtener las categorías desde la base de datos
+            $sql_categorias = "SELECT id_categoria, nombre FROM categoria";
+            $resultado_categorias = $conexion->query($sql_categorias);
 
-        <option value="1">Ferreteria</option>
-
-        <option value="2">GPS</option>
-        
-        <option value="3">Insumo Computacionales</option>
-        
-        <option value="4">Arriendo</option>
-        
-        <option value="5">Alimentacion</option>
-        
-        <option value="6">Aduana</option>
-        
-        <option value="7">EPP</option>
-        
-        <option value="8">MISC</option>
-        
-        <option value="9">Insumos Electricos</option>
-        
-        <option value="10">Cortes Laser</option>
-        
-        <option value="11">Movilizacion</option>
+            // Verificar si hay resultados
+            if ($resultado_categorias->num_rows > 0) {
+                // Iterar sobre las filas de resultados y generar las opciones
+                while ($fila_categoria = $resultado_categorias->fetch_assoc()) {
+                    $id_categoria = $fila_categoria['id_categoria'];
+                    $nombre_categoria = $fila_categoria['nombre'];
+                    echo "<option value='$id_categoria'>$nombre_categoria</option>";
+                }
+            }
+        ?>
         </select>
         <br>
         <button type="submit">Crear Proveedor</button>
     </form>
- 
+</div>
 </body>
 </html>
 

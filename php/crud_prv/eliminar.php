@@ -93,7 +93,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         border-radius: 4px;
         transition: background-color 0.3s;
     }
-
+    .container-main{
+        margin-top:20vh;
+    }
     .crud:hover, 
     .Log_out:hover {
         background-color: #555;
@@ -162,19 +164,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <nav>
     <div class="nav">
-    <!-- <a href="../datos/insumos.php" class="crud">Insumos</a> -->
+    <a href="../datos/categorias.php" class="crud">Categoria</a> 
         <div class="nav-links">
             <a href="../crud_prv/actualizar.php" class="crud">Editar</a>
-            <a href="../datos/proveedores.php" class="crud">Proveedores</a>
+            <a href="../datos/proveedores.php" class="crud">Ver</a>
             <a href=../crud_prv/crear.php class="crud">Crear</a>
         </div>
         <div class="icon-circle">
             <img src="../../assets/images/usuario.png" alt="Icono" class="icon">
         </div>
-        <a href="../cerra_sesion.php" class="Log_out">Log Out</a>
+        <a href="../cerra_sesion.php" class="Log_out">Salir</a>
     </div>
 </nav>
-<h1>Eliminar proveedor</h1>
+<div class="container-main">
     <form method="post" action="eliminar.php">
         <label for="id">ID del proveedor:</label>
         <input type="text" name="id" required>
@@ -187,6 +189,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <br>
         <button type="submit">Eliminar Proveedor</button>
     </form>
-
+</div>
 </body>
 </html>

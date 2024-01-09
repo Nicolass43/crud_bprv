@@ -148,26 +148,6 @@ if (!isset($_SESSION['usuario'])) {
         width: 30px;
         height: 30px;
     }
-    .showcase{
-        margin-top:200px;
-        width: 80%;
-        border-collapse: collapse;
-        margin-top: 10vh; /* Espacio para la barra de navegación */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background-color: #fff;
-    }
-    .showcase th, td{
-        padding: 15px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-    .showcase th{
-        background-color: #3498db;
-        color: #fff;
-    }
-    .showcase tr:hover{
-        background-color: #f5f5f5;
-    }
     .busqueda_main {
         margin-top: 10vh;
         margin-right: 5vh;
@@ -219,7 +199,7 @@ if (!isset($_SESSION['usuario'])) {
 <body>
     <nav>
     <div class="nav">
-    <!-- <a href="insumos.php" class="crud">Insumos</a> -->
+    <a href="categorias.php" class="crud">Categoria</a> 
         <div class="nav-links">
             <a href="../crud_prv/actualizar.php" class="crud">Editar</a>
             <a href=../crud_prv/crear.php class="crud">Crear</a>
@@ -228,30 +208,41 @@ if (!isset($_SESSION['usuario'])) {
         <div class="icon-circle">
             <img src="../../assets/images/usuario.png" alt="Icono" class="icon">
         </div>
-        <a href="../cerra_sesion.php" class="Log_out">Log Out</a>
+        <a href="../cerra_sesion.php" class="Log_out">Salir</a>
     </div>
     
 </nav>
 <div class="busqueda_main">  
     <form method="post" action="proveedores.php">
-        <label for="id_prv">ID del Proveedor:</label>
+        <!--<label for="id_prv">ID del Proveedor:</label>
         <input type="text" name="id_prv">
+        <br> -->
+        <!-- filtrar datos por rut -->
+
+        <label for="rut">Rut:</label>
+        <input type="text" name="rut">
         <br>
+         <!-- filtrar datos nombre fantasia (nombre real) -->
         <label for="nombre_fantasia">Nombre Fantasía:</label>
         <input type="text" name="nombre_fantasia">
         <br>
+         <!-- filtrar datos por razon social (nombre legal) -->
         <label for="razon_social">Razón Social:</label>
         <input type="text" name="razon_social">
         <br>
-        <label for="direccion">Dirección:</label>
+        <!-- filtrar datos por direccion -->
+        <!-- <label for="direccion">Dirección:</label>
         <input type="text" name="direccion">
-        <br>
-        <label for="email">Email:</label>
+        <br> -->
+        <!--  filtrar datos por email -->
+        <!--<label for="email">Email:</label>
         <input type="text" name="email">
         <br>
-        <label for="telefono">Teléfono:</label>
+         filtrar datos por telefono -->
+        <!-- <label for="telefono">Teléfono:</label>
         <input type="text" name="telefono">
-        <br>
+        <br> --> 
+        <!--  filtrar datos por tipo de pago -->
         <label for="condicion_pago">Condición de Pago:</label>
         <select name="condicion_pago">
             <option value="" selected disabled>Seleccionar Pago</option>
@@ -259,6 +250,7 @@ if (!isset($_SESSION['usuario'])) {
             <option value="Contado">Contado</option>
         </select>
         <br>
+        <!-- // filtrar datos por categoria -->
         <label for="categoria">Categoría:</label>
         <select id="Categoria" name="id_categoria">
             <option value="" selected disabled>Seleccionar Categoría</option>
@@ -272,13 +264,14 @@ if (!isset($_SESSION['usuario'])) {
             <option value="8">MISC</option>
             <option value="9">Insumos Electricos</option>
             <option value="10">Cortes Laser</option>
+            <option value="11">Movilizacion</option>
         </select>
         <br>
         <div class="subir">
             <button type="submit">Buscar Proveedores</button>
         </div>
         <div class="limpiar">
-            <button type="reset">Limpiar Filtros</button>
+            <button type="submit">Limpiar Filtros</button>
         </div>
     </form>
 </div>
@@ -290,6 +283,7 @@ if (!isset($_SESSION['usuario'])) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' || TRUE) {
             // Obtener los valores del formulario
             $id_prv = $_POST['id_prv'];
+            $rut = $_POST['rut'];
             $nombre_fantasia = $_POST['nombre_fantasia'];
             $razon_social = $_POST['razon_social'];
             $direccion = $_POST['direccion'];
@@ -299,17 +293,20 @@ if (!isset($_SESSION['usuario'])) {
             $id_categoria = $_POST['id_categoria'];
         
             // Construir la consulta
-            $sql = "SELECT pr.id,
-                            pr.rut,
-                            pr.nombre_fantasia AS 'nombre fantasia', 
-                            pr.razon_social AS 'razon social', 
-                            pr.direccion, pr.email, 
-                            pr.telefono, pr.condicion_pago AS 'condicion pago', 
-                            cat.nombre AS 'categoria'
+            $sql = "SELECT pr.id AS 'ID',
+                            pr.rut AS 'Rut',
+                            pr.nombre_fantasia AS 'Nombre Fantasia', 
+                            pr.razon_social AS 'Razon Social', 
+                            pr.direccion AS 'Direccion',
+                            pr.email AS 'Email', 
+                            pr.telefono AS 'Telefono', 
+                            pr.condicion_pago AS 'Condicion Pago', 
+                            cat.nombre AS 'Categoria'
                     FROM proveedor pr
                     JOIN proveedor_categoria pc ON pr.id = pc.id_proveedor
                     JOIN categoria cat ON pc.id_categoria = cat.id_categoria
                     WHERE (pr.id = '$id_prv' OR '$id_prv' = '')
+                    AND (pr.rut LIKE '%$rut%' OR '$rut' = '')
                     AND (pr.nombre_fantasia LIKE '%$nombre_fantasia%' OR '$nombre_fantasia' = '')
                     AND (pr.razon_social LIKE '%$razon_social%' OR '$razon_social' = '')
                     AND (pr.direccion LIKE '%$direccion%' OR '$direccion' = '')

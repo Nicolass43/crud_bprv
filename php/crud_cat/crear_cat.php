@@ -13,6 +13,24 @@ if (!isset($_SESSION['usuario'])) {
     session_destroy();
     die();
 }
+// Insertar los datos a la tabla categoria
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nombre_cat = $_POST['nombre'];
+
+    $sql_cat = "INSERT INTO categoria (nombre) VALUES ('$nombre_cat')";
+
+    if ($conexion->query($sql_cat) === TRUE) {
+        echo '<script>
+            alert("Categoría creada correctamente");
+            window.location = "../datos/categorias.php";
+            </script>';
+    } else {
+        echo '<script>
+            alert("Error en la creación de la categoría");
+            window.location = "crear_cat.php";
+            </script>';
+    }
+}
 
 ?>
 
@@ -21,7 +39,7 @@ if (!isset($_SESSION['usuario'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categorías</title>
+    <title>Document</title>
 </head>
 <style>
     body {
@@ -176,7 +194,7 @@ if (!isset($_SESSION['usuario'])) {
 <body>
 <nav>
     <div class="nav">
-    <a href="proveedores.php" class="crud">Proveedores</a> 
+    <a href="../datos/proveedores.php" class="crud">Proveedores</a> 
         <div class="nav-links">
             <a href="../crud_cat/actualizar_cat.php" class="crud">Editar</a>
             <a href=../crud_cat/crear_cat.php class="crud">Crear</a>
@@ -188,38 +206,16 @@ if (!isset($_SESSION['usuario'])) {
         <a href="../cerra_sesion.php" class="Log_out">Salir</a>
     </div>
 </nav>
-    <?php
-    // Mostrar los datos de la tabla
-    $sql_mos = "SELECT 
-                id_categoria AS 'ID',
-                nombre AS 'Nombre' 
-                FROM categoria";
-
-    $resultado = $conexion->query($sql_mos);
-
-    if ($resultado->num_rows > 0) {
-        echo '<table border="1" class="resultado_filtros">';
-        // Encabezados de la tabla
-        echo '<tr>';
-        while ($columna = $resultado->fetch_field()) {
-            echo '<th>' . $columna->name . '</th>';
-        }
-        echo '</tr>';
-        // Datos de la tabla
-        while ($fila = $resultado->fetch_assoc()) {
-            echo '<tr>';
-            foreach ($fila as $valor) {
-                echo '<td>' . $valor . '</td>';
-            }
-            echo '</tr>';
-        }
-        echo '</table>';
-    } else {
-        echo "No se encontraron resultados.";
-    }
-
-    $conexion->close();
-    ?>
-
+<div class="busqueda_main">
+    <form method="post" action="../crud_cat/crear_cat.php">
+        <label for="nombre">Nombre categoría</label>
+        <input type="text" name="nombre" required>
+        <br>
+        <div class="subir">
+            <button type="submit">Crear categoria</button>
+        </div>
+    </form>
+    
+    </div>
 </body>
 </html>

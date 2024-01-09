@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardar_cambios'])){
         $categoria_form = $_POST['id_categoria'];
+        $nombre_cat = $_POST['nombre'];
 
 
     }  
@@ -163,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .contenedor_main {
-            margin-top: 70px;
+            margin-top: 20vh;
         }
 
         .texto {
@@ -227,16 +228,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <body>
 <nav>
     <div class="nav">
-    <!-- <a href="../datos/insumos.php" class="crud">Insumos</a> -->
+    <a href="../datos/categorias.php" class="crud">Categoria</a> 
         <div class="nav-links">
             <a href="../crud_prv/crear.php" class="crud">Crear</a>
-            <a href="../datos/proveedores.php" class="crud">Proveedores</a>
+            <a href="../datos/proveedores.php" class="crud">Ver</a>
             <a href="../crud_prv/eliminar.php" class="crud">Eliminar</a>
         </div>
         <div class="icon-circle">
             <img src="../../assets/images/usuario.png" alt="Icono" class="icon" >
         </div>   
-        <a href="../cerra_sesion.php" class="Log_out">Log Out</a>
+        <a href="../cerra_sesion.php" class="Log_out">Salir</a>
     </div>
 </nav>
 <div action="actualizar.php" class="contenedor_main">
@@ -275,22 +276,27 @@ if (isset($proveedor)) {
         <input type="text" name="telefono" value="<?php echo $proveedor['telefono']; ?>" >
         <br>
         <label for="id_categoria">Categoria:</label>
-        <select id="id_categoria" name="id_categoria">
-        <option value="1">Ferreteria</option>
-        <option value="2">GPS</option>      
-        <option value="3">Insumo Computacionales</option>    
-        <option value="4">Arriendo</option>     
-        <option value="5">Alimentacion</option>      
-        <option value="6">Aduana</option>        
-        <option value="7">EPP</option        
-        <option value="8">MISC</option>
-        <option value="9">Insumos Electricos</option>
-        <option value="10">Cortes Laser</option>
-        <option value="11">Movilizacion</option>
+        <select id="Categoria" name="id_categoria">
+        <option value="<?php echo $categoria['nombre']; ?> " selected disabled>Seleccionar Categoría</option>
+        <?php
+            // Consulta para obtener las categorías desde la base de datos
+            $sql_categorias = "SELECT id_categoria, nombre FROM categoria";
+            $resultado_categorias = $conexion->query($sql_categorias);
+
+            // Verificar si hay resultados
+            if ($resultado_categorias->num_rows > 0) {
+                // Iterar sobre las filas de resultados y generar las opciones
+                while ($fila_categoria = $resultado_categorias->fetch_assoc()) {
+                    $id_categoria = $fila_categoria['id_categoria'];
+                    $nombre_categoria = $fila_categoria['nombre'];
+                    echo "<option value='$id_categoria'>$nombre_categoria</option>";
+                }
+            }
+        ?>
         </select>
-        <br>
         <label for="condicion_pago">Condición de Pago:</label>
         <select name="condicion_pago" id="condicion_pago">
+            
             <option value="Credito" <?php echo ($proveedor['condicion_pago'] == 'Credito') ? 'selected' : ''; ?>>Credito</option>
             <option value="Contado" <?php echo ($proveedor['condicion_pago'] == 'Contado') ? 'selected' : ''; ?>>Contado</option>
         </select>
