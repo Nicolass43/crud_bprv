@@ -9,10 +9,6 @@ El login fue realizado por otro usuario pero es funcional con la base de datos.
 
 Todo esto esta siendo hosteado por apache2 en el archivo.
         /var/www/html/LOGIN
-Todo esto esta siendo hosteado por apache2 en el archivo
-        computer/var/www/html/LOGIN
->>>>>>> refs/remotes/origin/main
-
 El codigo es bastante simple de entender pero aun asi intentare dejare la mayor cantidad de comentarios dentro del mismo.
 
 Las credenciales de phpmyadmin se encuentran en el archivo de conexion especificando que es cada cosa.
